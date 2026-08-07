@@ -255,11 +255,18 @@
     const level = v => v <= 0 ? -1 : Math.min(ramp.length - 1, Math.floor((v / max) * ramp.length * 0.999));
 
     const W = 30 + weeks * (cell + gap), H = 22 + 7 * (cell + gap);
-    let cells = '', monthLabels = '', lastMonth = '';
+    let cells = '', monthLabels = '', lastMonth = '', lastLabelWeek = -3;
     for (let w = 0; w < weeks; w++) {
       const weekStart = U.addDays(start, w * 7);
       const m = U.MONTHS_SHORT[U.parseISO(weekStart).getMonth()];
-      if (m !== lastMonth) { monthLabels += `<text class="axis-label" x="${30 + w * (cell + gap)}" y="10">${m}</text>`; lastMonth = m; }
+      // rótulo só quando muda o mês e há espaço desde o anterior (evita sobreposição)
+      if (m !== lastMonth) {
+        if (w - lastLabelWeek >= 3) {
+          monthLabels += `<text class="axis-label" x="${30 + w * (cell + gap)}" y="10">${m}</text>`;
+          lastLabelWeek = w;
+        }
+        lastMonth = m;
+      }
       for (let dow = 0; dow < 7; dow++) {
         const date = U.addDays(weekStart, dow);
         if (date > U.today()) continue;
