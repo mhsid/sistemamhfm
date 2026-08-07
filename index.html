@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Sistema de gestão do Engenheiro de IA — diário de trabalho, demandas, projetos, reuniões, insights e dashboard.">
+<meta name="color-scheme" content="light dark">
+<title>Núcleo IA · Sistema do Engenheiro de IA</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<div id="boot" class="boot">
+  <div class="boot__mark">🧠</div>
+  <div class="boot__text">Iniciando Núcleo IA…</div>
+</div>
+
+<div class="app" id="app" hidden>
+
+  <!-- ══════════════ SIDEBAR ══════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">
+      <div class="brand__mark">🧠</div>
+      <div class="brand__text">
+        <strong>Núcleo IA</strong>
+        <span id="brandSub">Engenharia de IA</span>
+      </div>
+      <button class="icon-btn sidebar__close" id="btnCloseNav" title="Fechar menu" aria-label="Fechar menu"></button>
+    </div>
+
+    <nav class="nav" id="nav" aria-label="Navegação principal"></nav>
+
+    <div class="sidebar__foot">
+      <div class="streak" id="streakBox" title="Dias seguidos com registro no diário">
+        <span class="streak__flame">🔥</span>
+        <span class="streak__num" id="streakNum">0</span>
+        <span class="streak__label">dias de constância</span>
+      </div>
+      <div class="sidebar__user">
+        <div class="avatar" id="userAvatar">M</div>
+        <div class="sidebar__user-info">
+          <strong id="userName">Você</strong>
+          <span id="userRole">Engenheiro de IA</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <!-- ══════════════ MAIN ══════════════ -->
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn topbar__menu" id="btnOpenNav" title="Menu" aria-label="Abrir menu"></button>
+
+      <div class="topbar__title">
+        <h1 id="viewTitle">Painel</h1>
+        <p id="viewSubtitle"></p>
+      </div>
+
+      <div class="topbar__actions">
+        <button class="search-trigger" id="btnSearch" title="Buscar (Ctrl+K)">
+          <span class="i i--sm" data-icon="search"></span>
+          <span class="search-trigger__label">Buscar ou executar…</span>
+          <kbd>Ctrl K</kbd>
+        </button>
+        <button class="btn btn--primary btn--icon" id="btnQuickAdd" title="Adicionar (N)">
+          <span class="i" data-icon="plus"></span><span class="btn__text">Novo</span>
+        </button>
+        <button class="icon-btn" id="btnTheme" title="Alternar tema" aria-label="Alternar tema"></button>
+        <button class="icon-btn icon-btn--companion" id="btnCompanion" title="Abrir companheiro (C)" aria-label="Companheiro">
+          <span class="i" data-icon="sparkles"></span>
+          <span class="badge-dot" id="companionDot" hidden></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="view" id="view" tabindex="-1"></main>
+  </div>
+
+  <!-- ══════════════ COMPANION DRAWER ══════════════ -->
+  <aside class="companion" id="companion" aria-label="Companheiro digital">
+    <header class="companion__head">
+      <div class="companion__avatar" id="companionAvatar">✦</div>
+      <div class="companion__id">
+        <strong id="companionName">ARIA</strong>
+        <span id="companionStatus">pensando…</span>
+      </div>
+      <button class="icon-btn" id="btnCloseCompanion" title="Fechar" aria-label="Fechar companheiro"></button>
+    </header>
+    <div class="companion__body" id="companionBody"></div>
+    <footer class="companion__foot" id="companionFoot"></footer>
+  </aside>
+
+</div>
+
+<!-- ══════════════ OVERLAYS ══════════════ -->
+<div class="modal-root" id="modalRoot" hidden></div>
+<div class="palette-root" id="paletteRoot" hidden>
+  <div class="palette">
+    <div class="palette__search">
+      <span class="i" data-icon="search"></span>
+      <input type="text" id="paletteInput" placeholder="Buscar demandas, projetos, reuniões, notas… ou digitar um comando" autocomplete="off" spellcheck="false">
+      <kbd>Esc</kbd>
+    </div>
+    <div class="palette__results" id="paletteResults"></div>
+    <div class="palette__hint">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navegar</span><span><kbd>Enter</kbd> abrir</span><span><kbd>Esc</kbd> fechar</span>
+    </div>
+  </div>
+</div>
+<div class="toasts" id="toasts"></div>
+
+<!-- ══════════════ SCRIPTS ══════════════ -->
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/seed.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/charts.js"></script>
+<script src="assets/js/forms.js"></script>
+<script src="assets/js/companion.js"></script>
+<script src="assets/js/views/dashboard.js"></script>
+<script src="assets/js/views/tasks.js"></script>
+<script src="assets/js/views/projects.js"></script>
+<script src="assets/js/views/meetings.js"></script>
+<script src="assets/js/views/insights.js"></script>
+<script src="assets/js/views/notes.js"></script>
+<script src="assets/js/views/calendar.js"></script>
+<script src="assets/js/views/journal.js"></script>
+<script src="assets/js/views/reports.js"></script>
+<script src="assets/js/views/settings.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
