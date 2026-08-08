@@ -14,7 +14,7 @@
       empty: 'Quadro limpo por aqui. Aproveita para pensar no que ninguém pediu ainda — costuma ser onde mora o melhor projeto.',
       nudge: 'Ó, olha isso aqui',
       praise: ['Isso!', 'Muito bom.', 'Tá voando.', 'Orgulho.'],
-      sign: 'Tô aqui do lado 👊'
+      sign: 'Tô aqui do lado — bora fazer crescer 👊'
     },
     direto: {
       hello: n => `${n}, seu status:`,
@@ -28,7 +28,7 @@
       empty: 'Silêncio no quadro. Silêncio também é trabalho: descanse ou pense.',
       nudge: 'Um lembrete gentil',
       praise: ['Bonito.', 'Um passo de cada vez.', 'Constância é isso.', 'Seguimos.'],
-      sign: 'Sem pressa, com direção.'
+      sign: 'Sem pressa, com direção — é assim que se faz crescer.'
     }
   };
   const voice = () => VOICE[ST.settings.companion.persona] || VOICE.parceiro;
@@ -381,8 +381,8 @@
     const body = U.$('#companionBody'), foot = U.$('#companionFoot');
     if (!body) return;
     const cfg = ST.settings.companion;
-    U.$('#companionName').textContent = cfg.name || 'ARIA';
-    U.$('#companionAvatar').textContent = (cfg.name || 'A').trim().charAt(0).toUpperCase();
+    U.$('#companionName').textContent = cfg.name || 'Sabiá';
+    U.$('#companionAvatar').innerHTML = App.brand.birdSvg('var(--brand-navy)');
 
     const list = nudges();
     U.$('#companionStatus').textContent = list.length ? `${list.length} ponto${list.length > 1 ? 's' : ''} de atenção` : 'tudo sob controle';
@@ -436,7 +436,7 @@
         notified[item.id] = true;
         try {
           new Notification(`${item.time} · ${item.title}`, {
-            body: (ST.settings.companion.name || 'ARIA') + ': começa em ' + delta + ' min',
+            body: (ST.settings.companion.name || 'Sabiá') + ': começa em ' + delta + ' min',
             tag: item.id
           });
         } catch (e) { /* silencioso */ }

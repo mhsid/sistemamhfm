@@ -28,7 +28,7 @@
       {
         id: 'prj_boletim', demo: true, name: 'Gerador de relatórios pedagógicos', sectorId: 'sec_pedag',
         problem: 'Professores gastam ~6h por bimestre escrevendo pareceres descritivos, com padrão inconsistente entre turmas.',
-        solution: 'Assistente que transforma anotações do professor em parecer estruturado, mantendo o tom da escola e permitindo edição antes do envio.',
+        solution: 'Assistente que transforma anotações do professor em parecer estruturado, mantendo o tom do colégio e permitindo edição antes do envio.',
         stage: 'piloto', status: 'ativo', startDate: d(-52), targetDate: d(21), progress: 65,
         stakeholders: ['Coordenação pedagógica', 'Professores do Fundamental II'],
         impact: { hoursSavedMonth: 24, peopleImpacted: 18, costSaved: 0 },
@@ -36,11 +36,11 @@
           { id: 'ms1', title: 'Mapear formato atual dos pareceres', due: d(-40), done: true },
           { id: 'ms2', title: 'Protótipo com 3 professores', due: d(-14), done: true },
           { id: 'ms3', title: 'Piloto com uma série completa', due: d(7), done: false },
-          { id: 'ms4', title: 'Liberar para toda a escola', due: d(30), done: false }
+          { id: 'ms4', title: 'Liberar para todo o colégio', due: d(30), done: false }
         ],
         updates: [
           { id: 'up1', date: d(-7), text: 'Piloto rodando com o 7º ano. Feedback: querem poder salvar frases favoritas para reutilizar.' },
-          { id: 'up2', date: d(-21), text: 'Protótipo aprovado pela coordenação. Ajustado o tom para ficar mais próximo da linguagem da escola.' }
+          { id: 'up2', date: d(-21), text: 'Protótipo aprovado pela coordenação. Ajustado o tom para ficar mais próximo da linguagem do colégio.' }
         ],
         tags: ['pedagógico', 'automação', 'texto'], createdAt: stamp(-52), updatedAt: stamp(-7)
       },
@@ -103,7 +103,7 @@
     }, o);
 
     state.tasks = [
-      T({ id: 'tsk_1', title: 'Ajustar prompt do parecer para linguagem da escola', sectorId: 'sec_pedag', projectId: 'prj_boletim', status: 'doing', priority: 'alta', due: d(1), estimateH: 3, timeSpentMin: 95, createdAt: stamp(-9),
+      T({ id: 'tsk_1', title: 'Ajustar prompt do parecer para linguagem do colégio', sectorId: 'sec_pedag', projectId: 'prj_boletim', status: 'doing', priority: 'alta', due: d(1), estimateH: 3, timeSpentMin: 95, createdAt: stamp(-9),
           description: 'A coordenação apontou que o texto ficou formal demais. Aproximar do vocabulário usado nos relatórios anteriores.',
           checklist: [{ id: 'c1', text: 'Coletar 10 pareceres antigos como referência', done: true }, { id: 'c2', text: 'Reescrever instruções de tom', done: true }, { id: 'c3', text: 'Validar com 2 professoras', done: false }], tags: ['prompt', 'piloto'] }),
       T({ id: 'tsk_2', title: 'Reunião de validação com o financeiro sobre a régua de risco', sectorId: 'sec_finan', projectId: 'prj_inadim', status: 'waiting', priority: 'media', due: d(3), estimateH: 1, createdAt: stamp(-6),
@@ -172,7 +172,7 @@
       { id: 'ins_1', demo: true, title: 'Professores querem reutilizar frases próprias', description: 'Cada professor tem um repertório de frases que já usa. Uma biblioteca pessoal de trechos aumentaria a adoção mais do que qualquer melhoria no modelo.', sectorId: 'sec_pedag', source: 'Reunião de piloto', tags: ['adoção', 'produto'], impact: 4, effort: 2, status: 'aprovado', createdAt: stamp(-7), updatedAt: stamp(-6), convertedTo: null },
       { id: 'ins_2', demo: true, title: 'Processo antes de tecnologia', description: 'Metade das demandas que chegam como "preciso de uma IA" são, na verdade, processo mal desenhado. Vale ter uma etapa fixa de diagnóstico antes de prometer solução.', sectorId: 'sec_psico', source: 'Levantamento psicologia', tags: ['método', 'diagnóstico'], impact: 5, effort: 2, status: 'aprovado', createdAt: stamp(-12), updatedAt: stamp(-10), convertedTo: null },
       { id: 'ins_3', demo: true, title: 'A direção decide por números, não por demonstração', description: 'Demos impressionam, mas a decisão de investir veio quando falei em horas economizadas. Todo projeto precisa nascer com uma métrica combinada.', sectorId: 'sec_direc', source: 'Reunião de diretoria', tags: ['gestão', 'métricas'], impact: 5, effort: 1, status: 'convertido', createdAt: stamp(-3), updatedAt: stamp(-2), convertedTo: { type: 'tasks', id: 'tsk_13' } },
-      { id: 'ins_4', demo: true, title: 'Secretaria repete as mesmas perguntas o dia todo', description: 'No período de rematrícula, a mesma dúvida sobre documentação aparece dezenas de vezes. É o caso de uso com melhor relação impacto/esforço da escola.', sectorId: 'sec_secre', source: 'Observação de campo', tags: ['atendimento'], impact: 4, effort: 3, status: 'convertido', createdAt: stamp(-6), updatedAt: stamp(-5), convertedTo: { type: 'projects', id: 'prj_matricula' } },
+      { id: 'ins_4', demo: true, title: 'Secretaria repete as mesmas perguntas o dia todo', description: 'No período de rematrícula, a mesma dúvida sobre documentação aparece dezenas de vezes. É o caso de uso com melhor relação impacto/esforço do colégio.', sectorId: 'sec_secre', source: 'Observação de campo', tags: ['atendimento'], impact: 4, effort: 3, status: 'convertido', createdAt: stamp(-6), updatedAt: stamp(-5), convertedTo: { type: 'projects', id: 'prj_matricula' } },
       { id: 'ins_5', demo: true, title: 'Formação vale mais que ferramenta', description: 'Professores usam IA por conta própria, sem critério. Um guia curto de uso responsável talvez gere mais impacto que o próximo sistema.', sectorId: 'sec_pedag', source: 'Conversa de corredor', tags: ['formação', 'risco'], impact: 5, effort: 2, status: 'novo', createdAt: stamp(-2), updatedAt: stamp(-2), convertedTo: null },
       { id: 'ins_6', demo: true, title: 'Ninguém lê e-mail longo', description: 'Comunicados extensos não são lidos. Resumo de 3 linhas no topo aumentou muito a resposta.', sectorId: 'sec_admin', source: 'Teste próprio', tags: ['comunicação'], impact: 2, effort: 1, status: 'arquivado', createdAt: stamp(-16), updatedAt: stamp(-15), convertedTo: null }
     ];

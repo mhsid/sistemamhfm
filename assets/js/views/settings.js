@@ -85,7 +85,7 @@
           <div class="card__body"><div class="form-grid">
             <div class="field"><label class="field__label">Nome</label><input class="input" data-s="userName" value="${esc(s.userName)}" placeholder="Como você quer ser chamado"></div>
             <div class="field"><label class="field__label">Função</label><input class="input" data-s="role" value="${esc(s.role)}"></div>
-            <div class="field col-2"><label class="field__label">Escola</label><input class="input" data-s="school" value="${esc(s.school)}" placeholder="Nome da instituição"></div>
+            <div class="field col-2"><label class="field__label">Instituição</label><input class="input" data-s="school" value="${esc(s.school)}" placeholder="Nome da instituição"></div>
             <div class="field"><label class="field__label">Início do expediente</label><input class="input" type="time" data-s="workdayStart" value="${esc(s.workdayStart)}"></div>
             <div class="field"><label class="field__label">Fim do expediente</label><input class="input" type="time" data-s="workdayEnd" value="${esc(s.workdayEnd)}"></div>
           </div></div>
@@ -115,14 +115,54 @@
           <div class="card__body"><div class="form-grid">
             <div class="field"><label class="field__label">Entregas por semana</label><input class="input" type="number" min="1" data-g="tasksPerWeek" value="${s.goals.tasksPerWeek}"></div>
             <div class="field"><label class="field__label">Reuniões por semana</label><input class="input" type="number" min="0" data-g="meetingsPerWeek" value="${s.goals.meetingsPerWeek}"></div>
-            <div class="field"><label class="field__label">Horas/mês devolvidas à escola</label><input class="input" type="number" min="0" data-g="hoursSavedMonth" value="${s.goals.hoursSavedMonth}"></div>
+            <div class="field"><label class="field__label">Horas/mês devolvidas ao colégio</label><input class="input" type="number" min="0" data-g="hoursSavedMonth" value="${s.goals.hoursSavedMonth}"></div>
             <div class="field"><label class="field__label">Limite de demandas simultâneas</label><input class="input" type="number" min="1" max="10" data-s="wipLimit" value="${s.wipLimit}">
               <span class="field__hint">Acima disso, o companheiro avisa que você está se dispersando</span></div>
           </div></div>
         </div>
 
         <div class="card">
-          <div class="card__head"><div><h3>Setores da escola</h3><p>Cada setor tem uma cor usada em todo o sistema</p></div>
+          <div class="card__head"><div><h3>Identidade visual</h3><p>As cores do sistema vêm do logo do colégio</p></div></div>
+          <div class="card__body" style="display:grid;gap:16px">
+            <div class="row" style="gap:16px;align-items:center">
+              ${App.brand.logo(64)}
+              <div style="flex:1;min-width:200px">
+                <strong style="font-size:14px">${esc(s.school || App.brand.school)}</strong>
+                <p class="small muted" style="line-height:1.6;margin-top:3px">
+                  Desenho vetorial inspirado no logo do colégio. Para usar o arquivo oficial,
+                  salve a imagem como <code>assets/img/logo.svg</code> (ou <code>logo.png</code>)
+                  na pasta do sistema e clique em procurar — ele passa a aparecer aqui,
+                  na barra lateral e na tela de abertura.
+                </p>
+                <div class="row" style="gap:8px;margin-top:10px">
+                  <button class="btn btn--sm" data-rescan-logo>${U.icon('refresh', 'i--sm')}<span>Procurar logo do colégio</span></button>
+                  <span class="small muted">${App.brand.hasCustom() ? 'usando o arquivo oficial ✓' : 'usando o desenho de reserva'}</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="section-title">Cores da marca</div>
+              <div class="row" style="gap:10px">
+                ${[['Azul-marinho', '#1e3a79', 'pássaro e traço · cor de ação do sistema'],
+                   ['Verde-limão', '#a8cf38', 'copa entrelaçada · destaques'],
+                   ['Verde de gráfico', '#8ab023', 'versão legível do verde em barras']].map(c => `
+                  <div class="row" style="gap:8px;padding:7px 11px;border:1px solid var(--border);border-radius:var(--r-sm)">
+                    <span style="width:22px;height:22px;border-radius:6px;background:${c[1]};flex:none"></span>
+                    <div><div style="font-size:12.5px;font-weight:600">${esc(c[0])}</div>
+                    <div class="small muted tnum">${c[1]}</div></div>
+                  </div>`).join('')}
+              </div>
+              <p class="small muted" style="margin-top:10px;line-height:1.6">
+                As cores dos gráficos foram testadas para daltonismo e contraste nos temas claro e escuro.
+                Se você tiver o manual de marca do colégio com os códigos exatos, é só trocar os valores
+                no topo de <code>assets/css/app.css</code>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card__head"><div><h3>Setores do colégio</h3><p>Cada setor tem uma cor usada em todo o sistema</p></div>
             <div class="card__actions"><button class="btn btn--sm" data-new-sector>${U.icon('plus', 'i--sm')}<span>Novo setor</span></button></div></div>
           <div class="card__body"><div class="list">
             ${ST.state.sectors.map(sec => `
@@ -179,7 +219,7 @@
         </div>
 
         <p class="small muted" style="text-align:center;padding:8px 0 20px">
-          Núcleo IA · sistema pessoal de acompanhamento · versão do formato de dados ${ST.SCHEMA}
+          Núcleo de IA · ${esc(s.school || App.brand.school)} · versão do formato de dados ${ST.SCHEMA}
         </p>
       </div>`;
 
@@ -196,6 +236,14 @@
         else { ST.settings.companion.notifications = false; ST.emit('settings'); }
       });
 
+      U.on(root, 'click', '[data-rescan-logo]', () => {
+        App.brand.rescan(() => {
+          UI.toast(App.brand.hasCustom() ? 'Logo oficial encontrado ✓' : 'Nenhum arquivo em assets/img/ — seguimos com o desenho', App.brand.hasCustom() ? 'good' : '');
+          App.refreshChrome();
+          U.$('#brandMark').innerHTML = App.brand.logo(38);
+          App.render();
+        });
+      });
       U.on(root, 'click', '[data-new-sector]', () => App.forms.sector());
       U.on(root, 'click', '[data-sector]', (ev, n) => App.forms.sector(n.dataset.sector));
       U.on(root, 'click', '[data-export]', exportNow);

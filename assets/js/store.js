@@ -9,12 +9,15 @@
   const SCHEMA = 1;
 
   /* ---------- CATÁLOGOS ---------- */
+  /* `color` = leitura semântica nas colunas do quadro.
+     `series` = cor de gráfico; a ordem foi validada para daltonismo e
+     contraste nos dois temas — não troque sem revalidar. */
   const TASK_STATUS = [
-    { id: 'backlog', label: 'Backlog',    short: 'Backlog',   color: 'var(--ink-3)',   series: 'var(--s7)', hint: 'Ideias e pedidos ainda não priorizados' },
+    { id: 'backlog', label: 'Backlog',    short: 'Backlog',   color: 'var(--ink-3)',   series: 'var(--s5)', hint: 'Ideias e pedidos ainda não priorizados' },
     { id: 'todo',    label: 'A fazer',    short: 'A fazer',   color: 'var(--s1)',      series: 'var(--s1)', hint: 'Priorizado e pronto para começar' },
     { id: 'doing',   label: 'Em andamento', short: 'Fazendo', color: 'var(--warning)', series: 'var(--s4)', hint: 'Você está trabalhando nisso agora' },
-    { id: 'waiting', label: 'Aguardando',  short: 'Aguardando', color: 'var(--serious)', series: 'var(--s2)', hint: 'Depende de terceiros, aprovação ou informação' },
-    { id: 'done',    label: 'Concluído',   short: 'Concluído', color: 'var(--good)',    series: 'var(--s3)', hint: 'Entregue e validado' }
+    { id: 'waiting', label: 'Aguardando',  short: 'Aguardando', color: 'var(--serious)', series: 'var(--s7)', hint: 'Depende de terceiros, aprovação ou informação' },
+    { id: 'done',    label: 'Concluído',   short: 'Concluído', color: 'var(--good)',    series: 'var(--s2)', hint: 'Entregue e validado' }
   ];
   const PRIORITY = [
     { id: 'baixa',   label: 'Baixa',   weight: 1, color: 'var(--axis)' },
@@ -46,7 +49,7 @@
     { id: 'reuniao',  label: 'Reunião',  color: 'var(--s1)', emoji: '👥' },
     { id: 'prazo',    label: 'Prazo',    color: 'var(--critical)', emoji: '🎯' },
     { id: 'foco',     label: 'Bloco de foco', color: 'var(--s7)', emoji: '🎧' },
-    { id: 'evento',   label: 'Evento escolar', color: 'var(--s3)', emoji: '🏫' },
+    { id: 'evento',   label: 'Evento do colégio', color: 'var(--s2)', emoji: '🏫' },
     { id: 'lembrete', label: 'Lembrete', color: 'var(--s4)', emoji: '🔔' },
     { id: 'formacao', label: 'Formação/estudo', color: 'var(--s5)', emoji: '📚' }
   ];
@@ -75,13 +78,13 @@
     return {
       meta: { schema: SCHEMA, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), lastExport: null },
       settings: {
-        userName: '', role: 'Engenheiro de IA', school: '',
+        userName: '', role: 'Engenheiro de IA', school: 'Colégio Fazer Crescer',
         theme: 'auto',
         weekStart: 1,
         workdayStart: '07:30', workdayEnd: '17:00',
         wipLimit: 3,
         goals: { tasksPerWeek: 8, hoursSavedMonth: 40, meetingsPerWeek: 4 },
-        companion: { name: 'ARIA', persona: 'parceiro', enabled: true, notifications: false, briefingHour: 8 },
+        companion: { name: 'Sabiá', persona: 'parceiro', enabled: true, notifications: false, briefingHour: 8 },
         onboarded: false
       },
       sectors: [], tasks: [], projects: [], meetings: [], insights: [],

@@ -3,17 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Sistema de gestão do Engenheiro de IA — diário de trabalho, demandas, projetos, reuniões, insights e dashboard.">
+<meta name="description" content="Núcleo de IA do Colégio Fazer Crescer — diário de trabalho, demandas, projetos, reuniões, insights e indicadores.">
 <meta name="color-scheme" content="light dark">
-<title>Núcleo IA · Sistema do Engenheiro de IA</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+<title>Núcleo IA · Colégio Fazer Crescer</title>
+<meta name="theme-color" content="#1e3a79">
+<link rel="icon" href="data:,">
 <link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
 
 <div id="boot" class="boot">
-  <div class="boot__mark">🧠</div>
-  <div class="boot__text">Iniciando Núcleo IA…</div>
+  <span class="brandmark" id="bootMark"></span>
+  <div class="boot__text"><strong>Colégio Fazer Crescer</strong>Abrindo o Núcleo de IA…</div>
 </div>
 
 <div class="app" id="app" hidden>
@@ -21,10 +22,10 @@
   <!-- ══════════════ SIDEBAR ══════════════ -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar__brand">
-      <div class="brand__mark">🧠</div>
+      <span class="brandmark" id="brandMark"></span>
       <div class="brand__text">
-        <strong>Núcleo IA</strong>
-        <span id="brandSub">Engenharia de IA</span>
+        <strong id="brandName">Colégio Fazer Crescer</strong>
+        <span id="brandSub">Núcleo de IA</span>
       </div>
       <button class="icon-btn sidebar__close" id="btnCloseNav" title="Fechar menu" aria-label="Fechar menu"></button>
     </div>
@@ -81,7 +82,7 @@
   <!-- ══════════════ COMPANION DRAWER ══════════════ -->
   <aside class="companion" id="companion" aria-label="Companheiro digital">
     <header class="companion__head">
-      <div class="companion__avatar" id="companionAvatar">✦</div>
+      <div class="companion__avatar" id="companionAvatar"></div>
       <div class="companion__id">
         <strong id="companionName">ARIA</strong>
         <span id="companionStatus">pensando…</span>
@@ -113,6 +114,7 @@
 
 <!-- ══════════════ SCRIPTS ══════════════ -->
 <script src="assets/js/utils.js"></script>
+<script src="assets/js/brand.js"></script>
 <script src="assets/js/store.js"></script>
 <script src="assets/js/seed.js"></script>
 <script src="assets/js/ui.js"></script>

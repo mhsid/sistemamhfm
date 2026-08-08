@@ -290,7 +290,7 @@
   function funnel(stages, opts) {
     opts = opts || {};
     const max = Math.max.apply(null, stages.map(s => s.value).concat([1]));
-    const ramp = ['var(--q2)', 'var(--q3)', 'var(--q4)', 'var(--q5)', 'var(--q6)'];
+    const ramp = ['var(--f1)', 'var(--f2)', 'var(--f3)', 'var(--f4)', 'var(--f5)'];
     return `<div style="display:grid;gap:9px">` + stages.map((s, i) => {
       const w = Math.max((s.value / max) * 100, s.value > 0 ? 4 : 1.5);
       const color = ramp[Math.min(i, ramp.length - 1)];

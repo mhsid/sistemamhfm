@@ -199,7 +199,7 @@
   /* ---------- view ---------- */
   App.views.projects = {
     title: 'Projetos',
-    subtitle: () => `${ST.activeProjects().length} ativos · ${ST.impactHoursMonth()}h/mês devolvidas à escola`,
+    subtitle: () => `${ST.activeProjects().length} ativos · ${ST.impactHoursMonth()}h/mês devolvidas ao colégio`,
     detail,
     render(root, params) {
       if (params && params.open) setTimeout(() => detail(params.open), 60);

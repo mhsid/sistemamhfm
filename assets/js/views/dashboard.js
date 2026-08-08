@@ -204,7 +204,7 @@
         <div class="card__body" style="display:grid;gap:15px">
           ${C.meter(doneWeek, g.tasksPerWeek || 8, { label: 'Entregas na semana' })}
           ${C.meter(meetWeek, g.meetingsPerWeek || 4, { label: 'Reuniões na semana' })}
-          ${C.meter(ST.impactHoursMonth(), g.hoursSavedMonth || 40, { label: 'Horas devolvidas por mês', valueText: U.fmtNumber(ST.impactHoursMonth()) + 'h / ' + (g.hoursSavedMonth || 40) + 'h' })}
+          ${C.meter(ST.impactHoursMonth(), g.hoursSavedMonth || 40, { label: 'Horas devolvidas ao colégio por mês', valueText: U.fmtNumber(ST.impactHoursMonth()) + 'h / ' + (g.hoursSavedMonth || 40) + 'h' })}
         </div>
       </div>
     </div>

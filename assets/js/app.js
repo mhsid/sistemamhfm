@@ -102,9 +102,11 @@
     $('#userName').textContent = first || 'Configure seu perfil';
     $('#userRole').textContent = s.role || 'Engenheiro de IA';
     $('#userAvatar').textContent = (first || 'N').charAt(0).toUpperCase();
-    $('#brandSub').textContent = s.school || 'Engenharia de IA';
+    $('#brandName').textContent = s.school || App.brand.school;
+    $('#brandSub').textContent = App.brand.system;
     $('#streakNum').textContent = ST.streak();
-    document.title = (typeof App.views[current].title === 'function' ? App.views[current].title() : App.views[current].title) + ' · Núcleo IA';
+    const viewName = typeof App.views[current].title === 'function' ? App.views[current].title() : App.views[current].title;
+    document.title = viewName + ' · Núcleo IA · ' + (s.school || App.brand.school);
   }
 
   /* ---------- TEMA ---------- */
@@ -233,20 +235,21 @@
   function onboarding() {
     const body = el('div', { html: `
       <div style="text-align:center;margin-bottom:18px">
-        <div style="font-size:40px">🧠</div>
-        <h3 style="font-size:19px;margin-top:8px">Bem-vindo ao Núcleo IA</h3>
-        <p class="small muted" style="max-width:420px;margin:6px auto 0;line-height:1.6">
-          Este é o seu diário de bordo como Engenheiro de IA da escola: reuniões, insights, demandas, projetos,
+        <span style="display:block;width:72px;height:72px;margin:0 auto">${App.brand.logo(72)}</span>
+        <h3 style="font-size:19px;margin-top:10px">Núcleo de IA · Colégio Fazer Crescer</h3>
+        <p class="small muted" style="max-width:430px;margin:6px auto 0;line-height:1.6">
+          Este é o seu diário de bordo como Engenheiro de IA do colégio: reuniões, insights, demandas, projetos,
           agenda e indicadores em um lugar só — com um companheiro digital te lembrando do que importa.
         </p>
       </div>
       <div class="form-grid">
         <div class="field"><label class="field__label">Como você quer ser chamado?</label>
           <input class="input" name="userName" placeholder="Seu nome" autofocus></div>
-        <div class="field"><label class="field__label">Nome da escola</label>
-          <input class="input" name="school" placeholder="Opcional"></div>
+        <div class="field"><label class="field__label">Nome da instituição</label>
+          <input class="input" name="school" value="Colégio Fazer Crescer"></div>
         <div class="field col-2"><label class="field__label">Como seu companheiro deve se chamar?</label>
-          <input class="input" name="companionName" value="ARIA" placeholder="ARIA"></div>
+          <input class="input" name="companionName" value="Sabiá" placeholder="Sabiá">
+          <span class="field__hint">O padrão é Sabiá — o pássaro que voa no logo do colégio</span></div>
         <div class="field col-2"><label class="field__label">E como ele deve falar com você?</label>
           <select class="select" name="persona">
             <option value="parceiro">Parceiro — caloroso, me motiva</option>
@@ -255,7 +258,7 @@
           </select></div>
       </div>
       <p class="small muted" style="margin-top:14px;line-height:1.6">
-        O sistema já vem com dados de exemplo de uma escola fictícia para você navegar sem tela vazia.
+        O sistema já vem com demandas, projetos e reuniões de exemplo para você navegar sem tela vazia.
         Quando quiser começar do zero, é um clique em <strong>Configurações → remover exemplos</strong>.
         Tudo é salvo apenas neste navegador; exporte backups de tempos em tempos.
       </p>` });
@@ -265,8 +268,8 @@
       footer: ['spacer', { label: 'Começar', variant: 'primary', icon: 'arrowRight', onClick: ({ close }) => {
         const v = App.forms.helpers.readForm(body);
         ST.settings.userName = v.userName || '';
-        ST.settings.school = v.school || '';
-        ST.settings.companion.name = v.companionName || 'ARIA';
+        ST.settings.school = v.school || App.brand.school;
+        ST.settings.companion.name = v.companionName || 'Sabiá';
         ST.settings.companion.persona = v.persona || 'parceiro';
         ST.settings.onboarded = true;
         ST.emit('onboarding');
@@ -331,6 +334,12 @@
     ST.load();
     applyTheme();
     installTooltips();
+    App.brand.applyFavicon();
+    App.brand.init(() => {
+      const brandMark = $('#brandMark'), bootMark = $('#bootMark');
+      if (brandMark) brandMark.innerHTML = App.brand.logo(38);
+      if (bootMark) bootMark.innerHTML = App.brand.logo(72);
+    });
 
     U.hydrateIcons(document);
     $('#btnCloseNav').innerHTML = U.icon('x');

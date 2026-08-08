@@ -77,7 +77,7 @@
     linhas.push(`- ${a.done.length} demandas concluídas`);
     linhas.push(`- ${a.meets.length} reuniões com ${U.uniq(a.meets.map(m => m.sectorId)).length} setores`);
     linhas.push(`- ${U.fmtDuration(U.sum(a.logs.map(l => l.minutes)))} de trabalho registrado`);
-    linhas.push(`- ${ST.impactHoursMonth()}h/mês devolvidas à escola pelas soluções em piloto e produção`);
+    linhas.push(`- ${ST.impactHoursMonth()}h/mês devolvidas ao colégio pelas soluções em piloto e produção`);
     linhas.push(`- ${ST.peopleImpacted()} pessoas impactadas`);
     const economia = U.sum(projetos.map(p => (p.impact || {}).costSaved));
     if (economia) linhas.push(`- Economia estimada: ${U.fmtMoney(economia)}/ano`);
