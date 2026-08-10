@@ -142,15 +142,18 @@ window.App = window.App || {};
     if (diff === 1) return 'amanhã';
     if (diff === -1) return 'ontem';
     if (diff === 2) return 'depois de amanhã';
+    /* o plural segue o número já arredondado, não a quantidade de dias */
+    const semanas = n => { const w = Math.max(1, Math.round(n / 7)); return w + (w > 1 ? ' semanas' : ' semana'); };
+    const meses = n => { const m = Math.max(1, Math.round(n / 30)); return m + (m > 1 ? ' meses' : ' mês'); };
     if (diff < 0) {
       const n = Math.abs(diff);
       if (n < 7) return 'há ' + n + ' dias';
-      if (n < 30) return 'há ' + Math.round(n / 7) + ' semana' + (n >= 14 ? 's' : '');
-      return 'há ' + Math.round(n / 30) + ' mês' + (n >= 60 ? 'es' : '');
+      if (n < 30) return 'há ' + semanas(n);
+      return 'há ' + meses(n);
     }
     if (diff < 7) return 'em ' + diff + ' dias';
-    if (diff < 30) return 'em ' + Math.round(diff / 7) + ' semana' + (diff >= 14 ? 's' : '');
-    return 'em ' + Math.round(diff / 30) + ' mês' + (diff >= 60 ? 'es' : '');
+    if (diff < 30) return 'em ' + semanas(diff);
+    return 'em ' + meses(diff);
   }
 
   function fmtDuration(minutes) {

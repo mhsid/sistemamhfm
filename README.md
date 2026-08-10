@@ -47,7 +47,31 @@ python3 -m http.server 8000
 | **Insights** | Percepções que ainda não são projeto, na matriz impacto × esforço. Todo insight termina virando demanda, virando projeto ou arquivado |
 | **Anotações** | Texto livre com markdown: seu método, princípios, roteiros, referências e ideias |
 | **Diário** | Check-in diário (energia, humor, foco, o que deu certo, o que travou, o que aprendi) e revisão semanal guiada |
-| **Relatórios** | Indicadores por período, cobertura dos setores e um **relatório pronto para a direção**, em texto, para copiar ou baixar |
+| **Relatórios** | Indicadores por período, cobertura dos setores e o **relatório para a gestão** (abaixo) |
+
+### O relatório para a gestão
+
+Em **Relatórios → Relatório para a gestão** (ou `Ctrl+K` → "relatório") o sistema monta um
+documento apresentável a partir do que já está registrado — nada de texto genérico. Você escolhe
+o período, o destinatário, escreve uma mensagem de abertura opcional e marca as seções.
+
+O documento traz, quando há dados para isso:
+
+1. **Resumo executivo** — quatro indicadores e um parágrafo escrito a partir dos seus números
+2. **Soluções que já geram valor** — cada projeto em piloto ou produção com problema, solução, impacto medido, marcos e a última atualização do diário do projeto
+3. **Em construção** — funil do portfólio e tabela do que está sendo desenvolvido
+4. **Entregas do período** — agrupadas por setor atendido, com data
+5. **Avanços registrados** — linha do tempo das atualizações que você escreveu nos projetos
+6. **Escuta dos setores** — reuniões por setor e as decisões literais que saíram delas
+7. **Oportunidades identificadas** — insights que viraram entrega e os que aguardam decisão
+8. **Cobertura por setor** — quem está sendo atendido e quem está sem contato
+9. **Riscos e bloqueios** — o que está atrasado e o que depende de terceiros
+10. **Próximos passos** — marcos combinados e entregas previstas
+11. **Nota de metodologia** — como cada número é apurado, incluindo o que é estimativa
+
+Três saídas: **Imprimir / PDF** (sai só o documento, sem a interface), **Baixar HTML**
+(arquivo único que abre em qualquer navegador, bom para anexar em e-mail) e **Copiar resumo**
+(versão em texto puro para WhatsApp ou corpo de e-mail).
 
 ### Sabiá, o companheiro digital
 
@@ -143,6 +167,7 @@ assets/js/
   charts.js                 gráficos em SVG puro (linha, colunas, rosca, funil, matriz, mapa de calor)
   forms.js                  formulários de todas as entidades
   companion.js              motor de regras do companheiro digital
+  report.js                 documento do relatório para a gestão
   app.js                    navegação, atalhos, busca global
   views/                    uma tela por arquivo
 ```

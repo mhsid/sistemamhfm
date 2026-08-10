@@ -704,7 +704,25 @@ kbd { font-family: var(--font); font-size: 10.5px; padding: 1.5px 5px; border-ra
   .app { grid-template-columns: 1fr; height: auto; }
   .view { overflow: visible; padding: 0; }
   .card { break-inside: avoid; box-shadow: none; }
+
+  /* Impressão do relatório: sai só o documento, sem a moldura do modal. */
+  body.printing-report > *:not(#modalRoot) { display: none !important; }
+  body.printing-report #modalRoot {
+    position: static; inset: auto; display: block; padding: 0;
+    background: none; backdrop-filter: none;
+  }
+  body.printing-report .modal-layer { display: block; }
+  body.printing-report .modal {
+    width: 100%; max-height: none; display: block;
+    border: none; border-radius: 0; box-shadow: none; animation: none;
+  }
+  body.printing-report .modal__head, body.printing-report .modal__foot { display: none !important; }
+  body.printing-report .modal__body { padding: 0; overflow: visible; }
 }
+
+/* Prévia do relatório: documento sempre em fundo claro, mesmo no tema escuro. */
+.report-preview { background: #fff; border-radius: var(--r-sm); }
+@media print { .report-preview { padding: 0; border-radius: 0; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }

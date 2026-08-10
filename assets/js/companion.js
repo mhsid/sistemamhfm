@@ -170,7 +170,10 @@
       return {
         id: 'revisao-' + from, tone: 'accent', title: 'Sexta-feira: revisão da semana',
         text: `Você concluiu <strong>${done}</strong> demanda${done === 1 ? '' : 's'} esta semana. Vale meia hora para limpar o quadro, atualizar os projetos e deixar a segunda-feira pronta.`,
-        actions: [{ label: 'Abrir revisão', run: () => review() }]
+        actions: [
+          { label: 'Abrir revisão', run: () => review() },
+          { label: 'Gerar relatório', run: () => App.report.open() }
+        ]
       };
     },
     function celebrate() {

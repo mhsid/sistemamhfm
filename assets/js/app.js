@@ -144,7 +144,7 @@
     { label: 'Novo projeto', hint: 'criar', icon: 'rocket', run: () => App.forms.project() },
     { label: 'Registrar o dia no diário', hint: 'criar', icon: 'book', run: () => App.forms.journal() },
     { label: 'Revisão semanal', hint: 'ritual', icon: 'refresh', run: () => App.companion.review() },
-    { label: 'Relatório para a direção', hint: 'exportar', icon: 'chart', run: () => App.views.reports.openReport() },
+    { label: 'Relatório para a gestão', hint: 'exportar', icon: 'printer', run: () => App.report.open() },
     { label: 'Exportar backup', hint: 'dados', icon: 'download', run: () => App.views.settings.exportNow() },
     { label: 'Alternar tema', hint: 'aparência', icon: 'moon', run: toggleTheme },
     { label: 'Abrir companheiro', hint: 'ajuda', icon: 'sparkles', run: () => toggleCompanion(true) }

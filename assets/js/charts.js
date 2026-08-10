@@ -225,7 +225,7 @@
       const h = Math.max(it.value > 0 ? 3 : 0, ih - (Y(it.value) - pad.t));
       const y = pad.t + ih - h;
       const color = it.color || S()[0];
-      const label = opts.labelAll || i === items.length - 1 || it.value === maxY
+      const label = it.value > 0 && (opts.labelAll || i === items.length - 1 || it.value === maxY)
         ? `<text class="val-label" x="${x + bw / 2}" y="${y - 6}" text-anchor="middle">${U.fmtNumber(it.value)}</text>` : '';
       return `<g class="hoverable" ${tip(it.label, [{ label: opts.valueLabel || 'Total', value: U.fmtNumber(it.value), color }].concat(it.meta ? [{ label: it.meta }] : []))}>
         <rect class="hit" x="${pad.l + band * i}" y="${pad.t}" width="${band}" height="${ih}"></rect>
@@ -396,5 +396,10 @@
     </div>`;
   }
 
-  App.charts = { barsH, barsStacked, donut, lineArea, columns, heatmap, funnel, matrix, sparkline, legendHtml, meter, tip, hydrate };
+  App.charts = {
+    barsH, barsStacked, donut, lineArea, columns, heatmap, funnel, matrix, sparkline,
+    legendHtml, meter, tip, hydrate,
+    /* desenho direto, para contextos de largura conhecida (ex.: relatório impresso) */
+    svg: { line: lineAreaSVG, columns: columnsSVG, matrix: matrixSVG }
+  };
 })(window.App);

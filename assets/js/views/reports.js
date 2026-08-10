@@ -61,68 +61,8 @@
       </tr>`).join('')}</tbody></table></div>`;
   }
 
-  /* ---------- relatório textual para a direção ---------- */
-  function directorReport() {
-    const a = agg();
-    const periodLabel = `${U.fmtDate(a.f)} a ${U.fmtDate(a.t)}`;
-    const projetos = ST.state.projects.filter(p => p.status !== 'cancelado');
-    const emProducao = projetos.filter(p => p.stage === 'producao');
-    const emPiloto = projetos.filter(p => p.stage === 'piloto');
-    const linhas = [];
-
-    linhas.push(`RELATÓRIO DE ENGENHARIA DE IA — ${periodLabel}`);
-    if (ST.settings.school) linhas.push(ST.settings.school);
-    linhas.push('');
-    linhas.push('NÚMEROS DO PERÍODO');
-    linhas.push(`- ${a.done.length} demandas concluídas`);
-    linhas.push(`- ${a.meets.length} reuniões com ${U.uniq(a.meets.map(m => m.sectorId)).length} setores`);
-    linhas.push(`- ${U.fmtDuration(U.sum(a.logs.map(l => l.minutes)))} de trabalho registrado`);
-    linhas.push(`- ${ST.impactHoursMonth()}h/mês devolvidas ao colégio pelas soluções em piloto e produção`);
-    linhas.push(`- ${ST.peopleImpacted()} pessoas impactadas`);
-    const economia = U.sum(projetos.map(p => (p.impact || {}).costSaved));
-    if (economia) linhas.push(`- Economia estimada: ${U.fmtMoney(economia)}/ano`);
-    linhas.push('');
-    linhas.push('EM PRODUÇÃO');
-    linhas.push(emProducao.length ? emProducao.map(p => `- ${p.name} (${ST.sectorName(p.sectorId)}) — ${(p.impact || {}).hoursSavedMonth || 0}h/mês`).join('\n') : '- Nenhuma solução em produção ainda.');
-    linhas.push('');
-    linhas.push('EM PILOTO');
-    linhas.push(emPiloto.length ? emPiloto.map(p => `- ${p.name} (${ST.sectorName(p.sectorId)}) — ${p.progress || 0}% concluído`).join('\n') : '- Nenhum piloto em andamento.');
-    linhas.push('');
-    linhas.push('PRINCIPAIS ENTREGAS');
-    linhas.push(a.done.slice(0, 10).map(t => `- ${t.title}${t.sectorId ? ' (' + ST.sectorName(t.sectorId) + ')' : ''}`).join('\n') || '- —');
-    const riscos = ST.overdueTasks().concat(ST.tasksByStatus('waiting'));
-    if (riscos.length) {
-      linhas.push('');
-      linhas.push('PONTOS DE ATENÇÃO');
-      linhas.push(riscos.slice(0, 6).map(t => `- ${t.title} — ${t.status === 'waiting' ? 'aguardando terceiros' : 'atrasada ' + U.fmtRelative(t.due)}`).join('\n'));
-    }
-    const proximos = ST.state.projects.filter(p => p.status === 'ativo' && p.targetDate).sort((x, y) => (x.targetDate || '').localeCompare(y.targetDate || '')).slice(0, 4);
-    if (proximos.length) {
-      linhas.push('');
-      linhas.push('PRÓXIMOS PASSOS');
-      linhas.push(proximos.map(p => `- ${p.name}: entrega prevista para ${U.fmtDate(p.targetDate)}`).join('\n'));
-    }
-    return linhas.join('\n');
-  }
-
-  function openReport() {
-    const txt = directorReport();
-    const body = el('div', { html: `
-      <p class="small muted" style="margin-bottom:12px">Resumo pronto para colar em e-mail ou apresentação. Revise antes de enviar — números seus, responsabilidade sua.</p>
-      <textarea class="textarea" style="min-height:380px;font-family:var(--mono);font-size:12.5px;line-height:1.6">${esc(txt)}</textarea>` });
-    UI.modal({
-      title: 'Relatório para a direção', size: 'wide', body,
-      footer: [
-        { label: 'Copiar', icon: 'copy', onClick: () => {
-          const ta = U.$('textarea', body);
-          if (navigator.clipboard) navigator.clipboard.writeText(ta.value).then(() => UI.toast('Relatório copiado ✓', 'good'), () => UI.toast('Não consegui copiar', 'bad'));
-        } },
-        { label: 'Baixar .txt', icon: 'download', onClick: () => UI.download('relatorio-ia-' + U.today() + '.txt', U.$('textarea', body).value, 'text/plain;charset=utf-8') },
-        'spacer',
-        { label: 'Fechar', variant: 'primary', onClick: ({ close }) => close() }
-      ]
-    });
-  }
+  /* O documento completo vive em report.js — aqui só o atalho. */
+  const openReport = () => App.report.open();
 
   App.views.reports = {
     title: 'Relatórios',
@@ -172,7 +112,7 @@
           </div>
           <div class="spacer"></div>
           <button class="btn btn--sm" data-print>${U.icon('printer', 'i--sm')}<span>Imprimir</span></button>
-          <button class="btn btn--primary btn--sm" data-report>${U.icon('chart', 'i--sm')}<span>Relatório para a direção</span></button>
+          <button class="btn btn--primary btn--sm" data-report>${U.icon('printer', 'i--sm')}<span>Relatório para a gestão</span></button>
         </div>
 
         <div class="grid grid--stats" style="margin-bottom:16px">
