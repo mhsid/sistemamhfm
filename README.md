@@ -132,18 +132,17 @@ As cores vêm do logo do colégio:
 
 | Cor | Código | Onde aparece |
 |---|---|---|
-| Azul-marinho | `#1e3a79` | pássaro e traço do logo · cor de ação do sistema (botões, links, destaques) |
-| Verde-limão | `#a8cf38` | copa entrelaçada · marca, avatar do companheiro |
-| Verde de gráfico | `#8ab023` | versão escurecida do verde, legível como barra e fatia |
+| Azul-marinho | `#133880` | pássaro e traço do logo · cor de ação do sistema (botões, links, destaques) |
+| Verde-limão | `#afca08` | copa entrelaçada · marca, avatar do companheiro |
+| Verde de gráfico | `#95ae00` | versão escurecida do verde, legível como barra e fatia |
 
-A marca que acompanha o sistema é um **desenho vetorial inspirado no logo**, feito para
-funcionar de 20px (favicon) a 144px. Para usar o arquivo oficial no lugar dele:
+Os dois primeiros foram amostrados do próprio arquivo `assets/img/logo.png`; o terceiro é o
+mesmo matiz do verde, escurecido até ficar legível sobre fundo claro.
 
-1. salve a imagem em `assets/img/logo.svg` (ou `logo.png`);
-2. abra **Configurações → Identidade visual → Procurar logo do colégio**.
-
-Ele passa a aparecer na barra lateral, na tela de abertura e nas Configurações. Se o arquivo
-não existir, o desenho de reserva continua no lugar — nada quebra.
+O logo oficial está em `assets/img/logo.png` e é usado na barra lateral, na tela de abertura,
+no favicon e nas Configurações. Para trocá-lo, substitua o arquivo (ou salve um `logo.svg`, que
+tem preferência) e clique em **Configurações → Identidade visual → Procurar logo do colégio**.
+Se nenhum arquivo for encontrado, o sistema desenha uma marca de reserva em SVG — nada quebra.
 
 As cores de gráfico não foram escolhidas no olho: a ordem das séries foi testada com um
 validador para **daltonismo** (protanopia, deuteranopia, tritanopia) e **contraste** nos temas

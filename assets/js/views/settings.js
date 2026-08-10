@@ -129,7 +129,7 @@
               <div style="flex:1;min-width:200px">
                 <strong style="font-size:14px">${esc(s.school || App.brand.school)}</strong>
                 <p class="small muted" style="line-height:1.6;margin-top:3px">
-                  Desenho vetorial inspirado no logo do colégio. Para usar o arquivo oficial,
+                  Cores extraídas do arquivo oficial do logo. Para trocar a imagem,
                   salve a imagem como <code>assets/img/logo.svg</code> (ou <code>logo.png</code>)
                   na pasta do sistema e clique em procurar — ele passa a aparecer aqui,
                   na barra lateral e na tela de abertura.
@@ -143,9 +143,9 @@
             <div>
               <div class="section-title">Cores da marca</div>
               <div class="row" style="gap:10px">
-                ${[['Azul-marinho', '#1e3a79', 'pássaro e traço · cor de ação do sistema'],
-                   ['Verde-limão', '#a8cf38', 'copa entrelaçada · destaques'],
-                   ['Verde de gráfico', '#8ab023', 'versão legível do verde em barras']].map(c => `
+                ${[['Azul-marinho', '#133880', 'pássaro e traço · cor de ação do sistema'],
+                   ['Verde-limão', '#afca08', 'copa entrelaçada · destaques'],
+                   ['Verde de gráfico', '#95ae00', 'versão legível do verde em barras']].map(c => `
                   <div class="row" style="gap:8px;padding:7px 11px;border:1px solid var(--border);border-radius:var(--r-sm)">
                     <span style="width:22px;height:22px;border-radius:6px;background:${c[1]};flex:none"></span>
                     <div><div style="font-size:12.5px;font-weight:600">${esc(c[0])}</div>

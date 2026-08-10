@@ -1,20 +1,20 @@
 /* ============================================================
    brand.js — identidade visual do Colégio Fazer Crescer
 
-   A marca abaixo é um desenho vetorial inspirado no logo do colégio
-   (copa entrelaçada em verde-limão, pássaro em azul-marinho e o traço
-   curvo na base). Para usar o arquivo oficial no lugar dela, basta
-   salvar a imagem em assets/img/logo.svg (ou logo.png) — o sistema
-   detecta e substitui sozinho, sem mexer em código.
+   O logo oficial fica em assets/img/logo.png (um logo.svg, se existir,
+   tem preferência). O desenho vetorial abaixo — copa entrelaçada, pássaro
+   e traço curvo — é a reserva usada quando nenhum arquivo é encontrado,
+   e também é a fonte do favicon e do avatar do companheiro.
+   As cores vieram da amostragem do arquivo oficial.
    ============================================================ */
 (function (App) {
   'use strict';
 
   const COLORS = {
-    lime: '#a8cf38',      // verde-limão da copa
-    limeInk: '#8ab023',   // verde escurecido, legível em gráficos
-    navy: '#1e3a79',      // azul-marinho do pássaro e do traço
-    navySoft: '#5b86d6'   // azul claro para o modo escuro
+    lime: '#afca08',      // verde-limão da copa (do arquivo oficial)
+    limeInk: '#95ae00',   // verde escurecido, legível em gráficos
+    navy: '#133880',      // azul-marinho do pássaro e do traço (oficial)
+    navySoft: '#5b86d5'   // azul claro para o modo escuro
   };
 
   /** Copa entrelaçada + tronco, em verde. */
@@ -77,10 +77,11 @@
   function init(done) {
     let cached = null;
     try { cached = localStorage.getItem(LOGO_KEY); } catch (e) { /* sem storage */ }
-    if (cached !== null) { resolved = cached; if (done) done(); return; }
+    if (cached !== null) { resolved = cached; applyFavicon(); if (done) done(); return; }
     probe(url => {
       resolved = url;
       try { localStorage.setItem(LOGO_KEY, url); } catch (e) { /* sem storage */ }
+      applyFavicon();
       if (done) done();
     });
   }
@@ -102,6 +103,8 @@
 
   /** Favicon gerado a partir da própria marca. */
   function applyFavicon() {
+    const link0 = document.querySelector('link[rel="icon"]');
+    if (resolved && link0) { link0.href = resolved; return; }
     const inner = canopy(COLORS.lime) + bird(COLORS.navy) + swoosh(COLORS.navy);
     const full = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 106 106">${inner}</svg>`;
     const link = document.querySelector('link[rel="icon"]');

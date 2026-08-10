@@ -2,8 +2,8 @@
    NÚCLEO IA — Colégio Fazer Crescer
    Design tokens + componentes. Sem dependências externas.
 
-   Paleta derivada do logo do colégio: azul-marinho #1e3a79 (pássaro e
-   traço) e verde-limão #a8cf38 (copa). As cores de gráfico foram
+   Paleta extraída do arquivo oficial do logo: azul-marinho #133880
+   (pássaro e traço) e verde-limão #afca08 (copa). As cores de gráfico foram
    validadas para daltonismo e contraste nos dois modos — a ordem das
    séries é o mecanismo de segurança, não é decorativa.
    ============================================================ */
@@ -26,26 +26,26 @@
   --border-2:   rgba(11,11,11,.16);
   --overlay:    rgba(11,11,11,.42);
 
-  /* marca */
-  --brand-navy:  #1e3a79;
-  --brand-lime:  #a8cf38;   /* só decoração: contraste baixo demais para texto */
-  --brand-lime-ink: #8ab023;
+  /* marca — cores extraídas do arquivo oficial do logo */
+  --brand-navy:  #133880;
+  --brand-lime:  #afca08;   /* só decoração: contraste baixo demais para texto */
+  --brand-lime-ink: #95ae00;
 
   /* acento (interação) */
-  --accent:      #1e3a79;
+  --accent:      #133880;
   --accent-ink:  #ffffff;
-  --accent-soft: rgba(30,58,121,.10);
-  --accent-line: rgba(30,58,121,.28);
+  --accent-soft: rgba(19,56,128,.10);
+  --accent-line: rgba(19,56,128,.28);
 
   /* séries categóricas (ordem fixa validada — nunca ciclar nem reordenar) */
-  --s1:#2f5aa8; --s2:#8ab023; --s3:#e87ba4; --s4:#eda100;
+  --s1:#335aa5; --s2:#95ae00; --s3:#e87ba4; --s4:#eda100;
   --s5:#1baf7a; --s6:#eb6834; --s7:#4a3aa7; --s8:#e34948;
 
   /* rampa sequencial marinho (mapa de calor) */
-  --q1:#dbe4f6; --q2:#b3c6ea; --q3:#8ba6dc; --q4:#5b86d6; --q5:#3f6bbd; --q6:#1e3a79;
+  --q1:#b8d2ff; --q2:#94bbff; --q3:#74a1f2; --q4:#5a84d3; --q5:#3e66b2; --q6:#133880;
 
   /* rampa ordinal marinho (funil de etapas) */
-  --f1:#7f9fd8; --f2:#5b86d6; --f3:#3f6bbd; --f4:#2a5498; --f5:#1e3a79;
+  --f1:#6b97e8; --f2:#547ecd; --f3:#4069b6; --f4:#2b529c; --f5:#133880;
 
   /* status (fixo — nunca tematizado) */
   --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
@@ -77,12 +77,12 @@
     --grid:#2c2c2a; --axis:#383835;
     --border:rgba(255,255,255,.10); --border-2:rgba(255,255,255,.18);
     --overlay:rgba(0,0,0,.62);
-    --brand-navy:#5b86d6; --brand-lime:#a8cf38; --brand-lime-ink:#9dc22f;
-    --accent:#5b86d6; --accent-soft:rgba(91,134,214,.18); --accent-line:rgba(91,134,214,.38);
-    --s1:#5b86d6; --s2:#7ba01f; --s3:#d55181; --s4:#c98500;
+    --brand-navy:#5b86d5; --brand-lime:#afca08; --brand-lime-ink:#a6c000;
+    --accent:#5b86d5; --accent-soft:rgba(91,134,213,.18); --accent-line:rgba(91,134,213,.38);
+    --s1:#5b86d5; --s2:#869e00; --s3:#d55181; --s4:#c98500;
     --s5:#199e70; --s6:#d95926; --s7:#9085e9; --s8:#e66767;
-    --q1:#1a3369; --q2:#28508f; --q3:#3f6bbd; --q4:#5b86d6; --q5:#8ba6dc; --q6:#b3c6ea;
-    --f1:#28508f; --f2:#3f6bbd; --f3:#5b86d6; --f4:#8ba6dc; --f5:#b3c6ea;
+    --q1:#234992; --q2:#3860ac; --q3:#4e78c6; --q4:#6591e1; --q5:#7daafc; --q6:#a3c5ff;
+    --f1:#2b529c; --f2:#4069b6; --f3:#547ecd; --f4:#6b97e8; --f5:#8db7ff;
     --good-text:#0ca30c;
     --shadow-1: 0 1px 2px rgba(0,0,0,.5);
     --shadow-2: 0 4px 12px rgba(0,0,0,.45), 0 16px 40px rgba(0,0,0,.4);
@@ -96,12 +96,12 @@
   --grid:#2c2c2a; --axis:#383835;
   --border:rgba(255,255,255,.10); --border-2:rgba(255,255,255,.18);
   --overlay:rgba(0,0,0,.62);
-  --brand-navy:#5b86d6; --brand-lime:#a8cf38; --brand-lime-ink:#9dc22f;
-  --accent:#5b86d6; --accent-soft:rgba(91,134,214,.18); --accent-line:rgba(91,134,214,.38);
-  --s1:#5b86d6; --s2:#7ba01f; --s3:#d55181; --s4:#c98500;
+  --brand-navy:#5b86d5; --brand-lime:#afca08; --brand-lime-ink:#a6c000;
+  --accent:#5b86d5; --accent-soft:rgba(91,134,213,.18); --accent-line:rgba(91,134,213,.38);
+  --s1:#5b86d5; --s2:#869e00; --s3:#d55181; --s4:#c98500;
   --s5:#199e70; --s6:#d95926; --s7:#9085e9; --s8:#e66767;
-  --q1:#1a3369; --q2:#28508f; --q3:#3f6bbd; --q4:#5b86d6; --q5:#8ba6dc; --q6:#b3c6ea;
-  --f1:#28508f; --f2:#3f6bbd; --f3:#5b86d6; --f4:#8ba6dc; --f5:#b3c6ea;
+  --q1:#234992; --q2:#3860ac; --q3:#4e78c6; --q4:#6591e1; --q5:#7daafc; --q6:#a3c5ff;
+  --f1:#2b529c; --f2:#4069b6; --f3:#547ecd; --f4:#6b97e8; --f5:#8db7ff;
   --good-text:#0ca30c;
   --shadow-1: 0 1px 2px rgba(0,0,0,.5);
   --shadow-2: 0 4px 12px rgba(0,0,0,.45), 0 16px 40px rgba(0,0,0,.4);
