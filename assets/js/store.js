@@ -120,8 +120,40 @@
     out.settings.companion = Object.assign(base.settings.companion, (data.settings || {}).companion || {});
     out.companionState = Object.assign(base.companionState, data.companionState || {});
     COLLECTIONS.forEach(c => { if (!Array.isArray(out[c])) out[c] = []; });
+    normalize(out);
     out.meta.schema = SCHEMA;
     return out;
+  }
+
+  /**
+   * Conserta registros com valores fora dos catálogos (vindos de versões
+   * antigas ou de importação). Sem isso um status desconhecido some dos
+   * filtros e pode derrubar a tela que tenta exibi-lo.
+   */
+  function normalize(data) {
+    const has = (list, id) => list.some(x => x.id === id);
+    data.projects.forEach(p => {
+      if (!has(PROJECT_STATUS, p.status)) p.status = 'ativo';
+      if (!has(PROJECT_STAGE, p.stage)) p.stage = 'descoberta';
+      if (!p.impact || typeof p.impact !== 'object') p.impact = { hoursSavedMonth: 0, peopleImpacted: 0, costSaved: 0 };
+      if (!Array.isArray(p.milestones)) p.milestones = [];
+      if (!Array.isArray(p.updates)) p.updates = [];
+      p.milestones.forEach(m => { if (!m.id) m.id = U.uid('ms'); });
+      p.updates.forEach(u => { if (!u.id) u.id = U.uid('up'); });
+    });
+    data.tasks.forEach(t => {
+      if (!has(TASK_STATUS, t.status)) t.status = 'todo';
+      if (!has(PRIORITY, t.priority)) t.priority = 'media';
+      if (!Array.isArray(t.checklist)) t.checklist = [];
+      if (!Array.isArray(t.tags)) t.tags = [];
+    });
+    data.insights.forEach(i => { if (!has(INSIGHT_STATUS, i.status)) i.status = 'novo'; });
+    data.events.forEach(e => { if (!has(EVENT_TYPE, e.type)) e.type = 'evento'; });
+    data.meetings.forEach(m => {
+      if (!has(MEETING_TYPE, m.type)) m.type = 'outro';
+      ['participants', 'decisions', 'taskIds', 'insightIds'].forEach(k => { if (!Array.isArray(m[k])) m[k] = []; });
+    });
+    return data;
   }
 
   const persist = U.debounce(function () {
@@ -309,12 +341,13 @@
     openTasks, tasksByStatus, overdueTasks, dueTodayTasks, dueSoonTasks, doneBetween,
     activeProjects, tasksOfProject, meetingsBetween, journalOf, dayAgenda,
     taskScore, prioritized, impactHoursMonth, peopleImpacted, streak,
-    exportData, importData, snapshotBackup, listBackups, restoreBackup, resetAll,
+    exportData, importData, snapshotBackup, listBackups, restoreBackup, resetAll, normalize,
     label: {
       status: id => (TASK_STATUS.find(s => s.id === id) || {}).label || id,
       priority: id => (PRIORITY.find(p => p.id === id) || {}).label || id,
       stage: id => (PROJECT_STAGE.find(s => s.id === id) || {}).label || id,
       insight: id => (INSIGHT_STATUS.find(s => s.id === id) || {}).label || id,
+      projectStatus: id => (PROJECT_STATUS.find(s => s.id === id) || {}).label || id || 'Sem situação',
       eventType: id => (EVENT_TYPE.find(t => t.id === id) || {}).label || id,
       meetingType: id => (MEETING_TYPE.find(t => t.id === id) || {}).label || id
     }

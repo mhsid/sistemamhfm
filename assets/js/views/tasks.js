@@ -189,10 +189,10 @@
           } }
         ]);
       });
-      U.on(root, 'click', '[data-task]', (ev, node) => {
+      U.on(root, 'click', '[data-task]', UI.guard((ev, node) => {
         if (ev.target.closest('[data-toggle],[data-menu]')) return;
         App.forms.task(node.dataset.task);
-      });
+      }, 'abrir a demanda'));
 
       /* arrastar e soltar */
       let dragId = null;

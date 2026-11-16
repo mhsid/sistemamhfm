@@ -35,7 +35,7 @@
       <div class="card__body" style="display:grid;gap:11px">
         <div class="row" style="gap:7px">
           ${UI.sectorChip(p.sectorId) || '<span class="chip">Transversal</span>'}
-          <span class="chip ${p.status === 'ativo' ? 'chip--accent' : p.status === 'concluido' ? 'chip--good' : p.status === 'pausado' ? 'chip--warning' : ''}">${esc(ST.PROJECT_STATUS.find(s => s.id === p.status).label)}</span>
+          <span class="chip ${p.status === 'ativo' ? 'chip--accent' : p.status === 'concluido' ? 'chip--good' : p.status === 'pausado' ? 'chip--warning' : ''}">${esc(ST.label.projectStatus(p.status))}</span>
           ${quiet ? `<span class="chip chip--warning" title="Sem atualização há mais de 14 dias">${U.icon('alert', 'i--sm')} parado</span>` : ''}
         </div>
         <h3 style="font-size:15px">${esc(p.name)}</h3>
@@ -74,7 +74,7 @@
       <div class="row" style="gap:7px;margin-bottom:14px">
         ${UI.sectorChip(p.sectorId) || ''}
         <span class="chip chip--accent">${esc(ST.label.stage(p.stage))}</span>
-        <span class="chip">${esc(ST.PROJECT_STATUS.find(s => s.id === p.status).label)}</span>
+        <span class="chip">${esc(ST.label.projectStatus(p.status))}</span>
         ${p.startDate ? `<span class="chip">início ${esc(U.fmtDate(p.startDate, 'medium'))}</span>` : ''}
         ${p.targetDate ? `<span class="chip ${p.targetDate < U.today() && p.status === 'ativo' ? 'chip--critical' : ''}">entrega ${esc(U.fmtDate(p.targetDate, 'medium'))}</span>` : ''}
       </div>
@@ -246,7 +246,7 @@
       U.on(root, 'input', 'input[data-f]', U.debounce((ev, n) => { state[n.dataset.f] = n.value; App.render(); }, 220));
       U.on(root, 'change', 'select[data-f]', (ev, n) => { state[n.dataset.f] = n.value; App.render(); });
       U.on(root, 'click', '[data-new]', () => App.forms.project());
-      U.on(root, 'click', '[data-project]', (ev, n) => detail(n.dataset.project));
+      U.on(root, 'click', '[data-project]', UI.guard((ev, n) => detail(n.dataset.project), 'abrir o projeto'));
     }
   };
 })(window.App);

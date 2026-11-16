@@ -538,7 +538,9 @@ svg { display: block; }
 .md a { text-decoration: underline; }
 
 /* ---------- 16. MODAL ---------- */
-.modal-root { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; background: var(--overlay); backdrop-filter: blur(3px); animation: fade .16s ease; }
+.modal-root { position: fixed; inset: 0; z-index: 200; background: var(--overlay); backdrop-filter: blur(3px); animation: fade .16s ease; }
+/* A camada preenche a tela inteira: assim o clique no escuro cai nela e fecha. */
+.modal-layer { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; overflow: auto; }
 @keyframes fade { from { opacity: 0 } }
 @keyframes rise { from { opacity: 0; transform: translateY(12px) scale(.985) } }
 .modal {

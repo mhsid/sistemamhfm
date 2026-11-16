@@ -28,6 +28,27 @@
   /* ---------- MODAIS (empilháveis) ---------- */
   const stack = [];
 
+  /**
+   * Mantém a camada de modais coerente com o DOM.
+   * O `hidden` é decidido pelo que existe na tela, não por um array em
+   * memória: assim nunca sobra um fundo escuro sem janela dentro dele.
+   */
+  function syncRoot() {
+    const root = $('#modalRoot');
+    if (!root) return;
+    for (let i = stack.length - 1; i >= 0; i--) {
+      if (!stack[i].layer.isConnected) stack.splice(i, 1);
+    }
+    root.hidden = root.children.length === 0;
+  }
+
+  /** Fecha tudo e limpa a camada — usado em falhas e ao trocar de tela. */
+  function closeAll() {
+    const root = $('#modalRoot');
+    stack.length = 0;
+    if (root) { root.innerHTML = ''; root.hidden = true; }
+  }
+
   function modal(opts) {
     const root = $('#modalRoot');
     const layer = el('div', { class: 'modal-layer' });
@@ -64,10 +85,15 @@
     }
 
     layer.appendChild(box);
-    layer.addEventListener('mousedown', ev => { if (ev.target === layer && opts.dismissable !== false) close(); });
+    /* clique no escuro (fora da caixa) fecha — a camada cobre a tela toda */
+    layer.addEventListener('mousedown', ev => {
+      if (ev.target !== layer || opts.dismissable === false) return;
+      ev.preventDefault();
+      close();
+    });
     root.appendChild(layer);
-    root.hidden = false;
     stack.push({ layer, opts });
+    syncRoot();
     U.hydrateIcons(box);
     if (App.charts) App.charts.hydrate(box);
 
@@ -78,24 +104,69 @@
       const idx = stack.findIndex(s => s.layer === layer);
       if (idx >= 0) stack.splice(idx, 1);
       layer.remove();
-      if (!stack.length) root.hidden = true;
+      syncRoot();
       if (opts.onClose) opts.onClose(result);
     }
     return { close, box, body, layer };
   }
 
   function closeTopModal() {
+    syncRoot();
     if (!stack.length) return false;
     const top = stack[stack.length - 1];
     if (top.opts.dismissable === false) return false;
-    const idx = stack.indexOf(top);
-    stack.splice(idx, 1);
+    stack.pop();
     top.layer.remove();
-    if (!stack.length) $('#modalRoot').hidden = true;
+    syncRoot();
     if (top.opts.onClose) top.opts.onClose();
     return true;
   }
-  const hasModal = () => stack.length > 0;
+  const hasModal = () => { syncRoot(); return stack.length > 0; };
+
+  /* ---------- FALHAS VISÍVEIS ----------
+     Um erro nunca deve virar tela escura sem explicação: limpamos a camada
+     presa e mostramos o que aconteceu, com os detalhes copiáveis. */
+  let lastCrash = 0;
+  function crash(err, context) {
+    try { console.error(context || 'falha', err); } catch (e) { /* console indisponível */ }
+    try { closeAll(); } catch (e) { /* nada a fazer */ }
+    const now = Date.now();
+    if (now - lastCrash < 1200) return;   // evita enxurrada de avisos iguais
+    lastCrash = now;
+    const msg = (err && err.message) || String(err || 'erro desconhecido');
+    const detalhe = [
+      context ? 'Ação: ' + context : '',
+      'Erro: ' + msg,
+      err && err.stack ? '\n' + err.stack : '',
+      '\nNavegador: ' + navigator.userAgent
+    ].filter(Boolean).join('\n');
+
+    try {
+    toast('Algo falhou aqui', 'bad', {
+      label: 'Ver detalhes',
+      onClick: () => modal({
+        title: 'Não consegui completar essa ação', size: 'sm',
+        subtitle: context || '',
+        body: el('div', {}, [
+          el('p', { class: 'small muted', style: { lineHeight: '1.6', marginBottom: '12px' },
+            text: 'A tela foi liberada e seus dados estão salvos. Se isso se repetir, copie os detalhes abaixo e me envie — eles dizem exatamente onde quebrou.' }),
+          el('textarea', { class: 'textarea', readonly: true, style: { minHeight: '150px', fontFamily: 'var(--mono)', fontSize: '11.5px' }, text: detalhe })
+        ]),
+        footer: ['spacer',
+          { label: 'Copiar detalhes', icon: 'copy', onClick: () => {
+            if (navigator.clipboard) navigator.clipboard.writeText(detalhe).then(() => toast('Detalhes copiados ✓', 'good'));
+          } },
+          { label: 'Fechar', variant: 'primary', onClick: ({ close }) => close() }]
+      })
+    });
+    } catch (e) { console.error('falha ao reportar a falha', e); }
+  }
+
+  /** Embrulha um handler para que uma exceção vire aviso, não tela travada. */
+  const guard = (fn, context) => function () {
+    try { return fn.apply(this, arguments); }
+    catch (e) { crash(e, context); }
+  };
 
   /* ---------- CONFIRMAÇÃO ---------- */
   function confirm(opts) {
@@ -202,7 +273,7 @@
   }
 
   App.ui = {
-    toast, modal, confirm, menu, closeTopModal, hasModal,
+    toast, modal, confirm, menu, closeTopModal, hasModal, syncRoot, closeAll, crash, guard,
     showTip, hideTip, statusChip, sectorChip, priorityChip, dueChip, emptyState, download
   };
 })(window.App);

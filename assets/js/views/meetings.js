@@ -236,7 +236,7 @@
       U.on(root, 'input', 'input[data-f]', U.debounce((ev, n) => { state[n.dataset.f] = n.value; App.render(); }, 220));
       U.on(root, 'change', 'select[data-f]', (ev, n) => { state[n.dataset.f] = n.value; App.render(); });
       U.on(root, 'click', '[data-new]', () => App.forms.meeting());
-      U.on(root, 'click', '[data-meeting]', (ev, n) => detail(n.dataset.meeting));
+      U.on(root, 'click', '[data-meeting]', UI.guard((ev, n) => detail(n.dataset.meeting), 'abrir a reunião'));
     }
   };
 })(window.App);

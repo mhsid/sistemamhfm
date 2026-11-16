@@ -43,6 +43,7 @@
 
   function go(view, params) {
     if (!App.views[view]) view = 'dashboard';
+    UI.syncRoot();
     current = view;
     currentParams = params || null;
     if (location.hash.slice(1) !== view) {
@@ -55,7 +56,7 @@
   }
 
   /** Re-renderiza a view atual preservando o foco de campos de filtro. */
-  function render() {
+  const render = UI.guard(function render() {
     const view = App.views[current];
     if (!view) return;
     const active = document.activeElement;
@@ -81,7 +82,7 @@
         <button class="btn btn--sm" onclick="location.reload()">Recarregar</button></div></div>`;
     }
     currentParams = null;
-    App.charts.hydrate(root);
+    try { App.charts.hydrate(root); } catch (e) { console.error('gráfico falhou', e); }
 
     if (keep) {
       const node = root.querySelector(`[data-f="${keep.f}"]`);
@@ -94,7 +95,7 @@
     }
     buildNav();
     refreshChrome();
-  }
+  }, 'desenhar a tela');
 
   function refreshChrome() {
     const s = ST.settings;
@@ -366,6 +367,16 @@
       if (i !== paletteIndex) { paletteIndex = i; renderPalette(); }
     });
     document.addEventListener('keydown', keyboard);
+
+    /* Rede de segurança: qualquer erro solto libera a tela e se explica. */
+    window.addEventListener('error', ev => {
+      if (ev.target && ev.target !== window) return;              // falha de recurso, não de código
+      if (ev.message && /ResizeObserver/.test(ev.message)) return; // ruído conhecido do navegador
+      UI.crash(ev.error || ev.message, 'erro inesperado');
+    });
+    window.addEventListener('unhandledrejection', ev => UI.crash(ev.reason, 'operação assíncrona'));
+    /* Se o fundo escuro ficar sem janela por qualquer motivo, ele se apaga. */
+    $('#modalRoot').addEventListener('click', () => UI.syncRoot());
     window.addEventListener('hashchange', () => {
       const view = location.hash.slice(1);
       if (view && App.views[view] && view !== current) go(view);
