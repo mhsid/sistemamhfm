@@ -261,7 +261,7 @@ svg { display: block; }
 }
 .icon-btn:hover { background: var(--surface-2); color: var(--ink); }
 .icon-btn--companion { border: 1px solid var(--border); }
-.badge-dot {
+.nia-dot {
   position: absolute; top: 5px; right: 5px; width: 8px; height: 8px; border-radius: 99px;
   background: var(--critical); border: 2px solid var(--surface);
 }
@@ -538,24 +538,24 @@ svg { display: block; }
 .md a { text-decoration: underline; }
 
 /* ---------- 16. MODAL ---------- */
-.modal-root { position: fixed; inset: 0; z-index: 200; background: var(--overlay); backdrop-filter: blur(3px); animation: fade .16s ease; }
+.nia-sheet-root { position: fixed; inset: 0; z-index: 200; background: var(--overlay); backdrop-filter: blur(3px); animation: fade .16s ease; }
 /* A camada preenche a tela inteira: assim o clique no escuro cai nela e fecha. */
-.modal-layer { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; overflow: auto; }
+.nia-sheet-layer { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; overflow: auto; }
 @keyframes fade { from { opacity: 0 } }
 @keyframes rise { from { opacity: 0; transform: translateY(12px) scale(.985) } }
-.modal {
+.nia-sheet {
   width: min(720px, 100%); max-height: min(88dvh, 900px); background: var(--surface);
   border-radius: var(--r-lg); box-shadow: var(--shadow-3); display: flex; flex-direction: column;
   animation: rise .2s cubic-bezier(.2,.8,.3,1); border: 1px solid var(--border); overflow: hidden;
 }
-.modal--wide { width: min(960px, 100%); }
-.modal--sm { width: min(460px, 100%); }
-.modal__head { display: flex; align-items: center; gap: 11px; padding: 16px 18px; border-bottom: 1px solid var(--border); }
-.modal__head h3 { font-size: 16px; flex: 1; }
-.modal__head p { font-size: 12px; color: var(--ink-3); }
-.modal__body { padding: 18px; overflow-y: auto; flex: 1; }
-.modal__foot { display: flex; align-items: center; gap: 9px; padding: 13px 18px; border-top: 1px solid var(--border); background: var(--surface-2); }
-.modal__foot .spacer { flex: 1; }
+.nia-sheet--wide { width: min(960px, 100%); }
+.nia-sheet--sm { width: min(460px, 100%); }
+.nia-sheet__head { display: flex; align-items: center; gap: 11px; padding: 16px 18px; border-bottom: 1px solid var(--border); }
+.nia-sheet__head h3 { font-size: 16px; flex: 1; }
+.nia-sheet__head p { font-size: 12px; color: var(--ink-3); }
+.nia-sheet__body { padding: 18px; overflow-y: auto; flex: 1; }
+.nia-sheet__foot { display: flex; align-items: center; gap: 9px; padding: 13px 18px; border-top: 1px solid var(--border); background: var(--surface-2); }
+.nia-sheet__foot .spacer { flex: 1; }
 
 /* ---------- 17. COMMAND PALETTE ---------- */
 .palette-root { position: fixed; inset: 0; z-index: 300; background: var(--overlay); backdrop-filter: blur(3px); display: grid; align-items: start; justify-items: center; padding: 12vh 20px 20px; animation: fade .14s ease; }
@@ -575,15 +575,15 @@ svg { display: block; }
 kbd { font-family: var(--font); font-size: 10.5px; padding: 1.5px 5px; border-radius: 4px; background: var(--sunken); border: 1px solid var(--border); color: var(--ink-3); }
 
 /* ---------- 18. TOASTS ---------- */
-.toasts { position: fixed; bottom: 18px; left: 50%; translate: -50% 0; z-index: 400; display: grid; gap: 8px; justify-items: center; pointer-events: none; }
-.toast {
+.nia-notes { position: fixed; bottom: 18px; left: 50%; translate: -50% 0; z-index: 400; display: grid; gap: 8px; justify-items: center; pointer-events: none; }
+.nia-note {
   display: flex; align-items: center; gap: 10px; padding: 10px 15px; border-radius: var(--r-full);
   background: var(--ink); color: var(--plane); font-size: 13px; box-shadow: var(--shadow-2);
   animation: toastIn .22s cubic-bezier(.2,.8,.3,1); pointer-events: auto; max-width: 90vw;
 }
-.toast button { color: inherit; font-weight: 650; text-decoration: underline; font-size: 12.5px; }
-.toast--good { background: var(--good); color: #fff; }
-.toast--bad { background: var(--critical); color: #fff; }
+.nia-note button { color: inherit; font-weight: 650; text-decoration: underline; font-size: 12.5px; }
+.nia-note--good { background: var(--good); color: #fff; }
+.nia-note--bad { background: var(--critical); color: #fff; }
 @keyframes toastIn { from { opacity: 0; transform: translateY(14px) } }
 
 /* ---------- 19. COMPANION ---------- */
@@ -698,7 +698,7 @@ kbd { font-family: var(--font); font-size: 10.5px; padding: 1.5px 5px; border-ra
   .stat__value { font-size: 24px; }
   .cal__day { min-height: 74px; padding: 4px; }
   .cal__ev { font-size: 10px; padding: 2px 4px; }
-  .modal__body { padding: 14px; }
+  .nia-sheet__body { padding: 14px; }
 }
 
 @media print {
@@ -708,18 +708,18 @@ kbd { font-family: var(--font); font-size: 10.5px; padding: 1.5px 5px; border-ra
   .card { break-inside: avoid; box-shadow: none; }
 
   /* Impressão do relatório: sai só o documento, sem a moldura do modal. */
-  body.printing-report > *:not(#modalRoot) { display: none !important; }
-  body.printing-report #modalRoot {
+  body.printing-report > *:not(#niaSheetRoot) { display: none !important; }
+  body.printing-report #niaSheetRoot {
     position: static; inset: auto; display: block; padding: 0;
     background: none; backdrop-filter: none;
   }
-  body.printing-report .modal-layer { display: block; }
-  body.printing-report .modal {
+  body.printing-report .nia-sheet-layer { display: block; }
+  body.printing-report .nia-sheet {
     width: 100%; max-height: none; display: block;
     border: none; border-radius: 0; box-shadow: none; animation: none;
   }
-  body.printing-report .modal__head, body.printing-report .modal__foot { display: none !important; }
-  body.printing-report .modal__body { padding: 0; overflow: visible; }
+  body.printing-report .nia-sheet__head, body.printing-report .nia-sheet__foot { display: none !important; }
+  body.printing-report .nia-sheet__body { padding: 0; overflow: visible; }
 }
 
 /* Prévia do relatório: documento sempre em fundo claro, mesmo no tema escuro. */

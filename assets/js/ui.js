@@ -8,8 +8,8 @@
 
   /* ---------- TOASTS ---------- */
   function toast(message, tone, action) {
-    const host = $('#toasts');
-    const node = el('div', { class: 'toast' + (tone ? ' toast--' + tone : '') }, [
+    const host = $('#niaNotes');
+    const node = el('div', { class: 'nia-note' + (tone ? ' nia-note--' + tone : '') }, [
       el('span', { text: message }),
       action ? el('button', { text: action.label, onclick: () => { action.onClick(); dismiss(); } }) : null
     ]);
@@ -34,7 +34,7 @@
    * memória: assim nunca sobra um fundo escuro sem janela dentro dele.
    */
   function syncRoot() {
-    const root = $('#modalRoot');
+    const root = $('#niaSheetRoot');
     if (!root) return;
     for (let i = stack.length - 1; i >= 0; i--) {
       if (!stack[i].layer.isConnected) stack.splice(i, 1);
@@ -44,17 +44,17 @@
 
   /** Fecha tudo e limpa a camada — usado em falhas e ao trocar de tela. */
   function closeAll() {
-    const root = $('#modalRoot');
+    const root = $('#niaSheetRoot');
     stack.length = 0;
     if (root) { root.innerHTML = ''; root.hidden = true; }
   }
 
   function modal(opts) {
-    const root = $('#modalRoot');
-    const layer = el('div', { class: 'modal-layer' });
-    const box = el('div', { class: 'modal' + (opts.size ? ' modal--' + opts.size : '') });
+    const root = $('#niaSheetRoot');
+    const layer = el('div', { class: 'nia-sheet-layer' });
+    const box = el('div', { class: 'nia-sheet' + (opts.size ? ' nia-sheet--' + opts.size : '') });
 
-    const head = el('div', { class: 'modal__head' }, [
+    const head = el('div', { class: 'nia-sheet__head' }, [
       el('div', { style: { flex: '1', minWidth: '0' } }, [
         el('h3', { text: opts.title || '' }),
         opts.subtitle ? el('p', { text: opts.subtitle }) : null
@@ -64,14 +64,14 @@
         : el('button', { class: 'icon-btn', title: 'Fechar', html: U.icon('x'), onclick: () => close() })
     ]);
 
-    const body = el('div', { class: 'modal__body' });
+    const body = el('div', { class: 'nia-sheet__body' });
     if (typeof opts.body === 'string') body.innerHTML = opts.body;
     else if (opts.body) body.appendChild(opts.body);
 
     box.append(head, body);
 
     if (opts.footer && opts.footer.length) {
-      const foot = el('div', { class: 'modal__foot' });
+      const foot = el('div', { class: 'nia-sheet__foot' });
       opts.footer.forEach(btn => {
         if (btn === 'spacer') { foot.appendChild(el('div', { class: 'spacer' })); return; }
         if (btn instanceof Node) { foot.appendChild(btn); return; }

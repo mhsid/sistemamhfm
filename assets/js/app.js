@@ -376,7 +376,7 @@
     });
     window.addEventListener('unhandledrejection', ev => UI.crash(ev.reason, 'operação assíncrona'));
     /* Se o fundo escuro ficar sem janela por qualquer motivo, ele se apaga. */
-    $('#modalRoot').addEventListener('click', () => UI.syncRoot());
+    $('#niaSheetRoot').addEventListener('click', () => UI.syncRoot());
     window.addEventListener('hashchange', () => {
       const view = location.hash.slice(1);
       if (view && App.views[view] && view !== current) go(view);

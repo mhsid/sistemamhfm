@@ -170,7 +170,7 @@
   };
   /* modal de dia precisa dos mesmos handlers */
   document.addEventListener('click', ev => {
-    const node = ev.target.closest('#modalRoot [data-open-id]');
+    const node = ev.target.closest('#niaSheetRoot [data-open-id]');
     if (!node) return;
     const kind = node.dataset.openKind, id = node.dataset.openId;
     App.ui.closeTopModal();
